@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="background container-fluid p-5">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <div class="row p-3">
+            <div class="col-md-3 d-flex justify-content-center">
+                {% if child.photo %}
+                <img src="{{child.photo.url}}" class="rounded" width="100%" height="300">
+                {% else %}
+                <img src="{% static 'images/default-person.png' %}" class="rounded" width="100%" height="250">
+                {% endif %}
+            </div>
+            <div class="col-md-9">
+                <div class="row"><a href="{% url 'child:detail-child' child.id %}"><h3 class="text-dark">
+                    {{child.name}}</h3></a></div>
+                <div class="row">{% if child.gender == 'Male' %}<i class="fa fa-mars blue-icon"></i>{% else %}<i
+                        class="fa fa-venus blue-icon"></i>{% endif %}&nbsp;<h6>{{child.gender}}</h6></div>
+                <hr>
+                <div class="row">
+                    <div class="col px-0">
+                        <h6>Birth Details:</h6>
+                    </div>
+                    <div class="col">
+                        <i class="fa fa-calendar blue-icon"></i>&nbsp;{{child.date_of_birth}}
+                    </div>
+                    <div class="col">
+                        <i class="fa fa-map-marker blue-icon"></i>&nbsp;{{child.place_of_birth}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row"><b><i class="fa fa-tint blue-icon"></i>&nbsp;Place of Vaccination:</b>&nbsp;{{child.place_of_vaccination}}
+                </div>
+                <hr>
+                <div class="row">
+                    <a class="btn btn-info text-light border border-info rounded-pill px-3 py-2" role="button"
+                       href="{% url 'child:update-child' child.id %}">Update</a>&nbsp;&nbsp;
+                    <a class="btn btn-success text-light border border-success rounded-pill px-3 py-2" role="button"
+                       href="{% url 'application:create-application' pkc=child.id %}">Apply for Vaccine</a>&nbsp;&nbsp;
+                    <a class="btn btn-danger text-light border border-danger rounded-pill px-3 py-2" role="button"
+                       href="{% url 'child:delete-child' child.id %}">Delete</a></div>
+                <hr>
+                <div class="row p-3">
+                    <h4>Vaccines Received</h4>
+                </div>
+                <ul>
+                    {% for vaccine in vaccines %}
+                    <li>{{vaccine}}</li>
+                    {% endfor %}
+                </ul>
+                <hr>
+                <div class="row p-3">
+                    <h4>Timeline</h4>
+                </div>
+                <div class="row p-3">
+                    {% for schedule in schedules reversed %}
+                    <div class="col-md-12 border border-dark p-5">
+                        <div class="row"><h3 class="text-dark">{{schedule.dose}} for {{schedule.child}}</h3></div>
+                        <hr>
+                        {% if schedule.vaccinated %}
+                        <div class="row"><b><i class="fa fa-calendar blue-icon"></i>&nbsp;Date of Vaccination:</b>&nbsp;{{schedule.date_of_vaccination}}
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <i class="fa fa-calendar blue-icon"></i>&nbsp;&nbsp;
+                            <i>
+                                {% if schedule.get_status.0 == 'Yellow' %}
+                                {{schedule.get_status.1}} days remaining for first day of vaccination
+                                <i class="fa fa-circle text-warning"></i>
+                                {% elif schedule.get_status.0 == 'Green' %}
+                                {{schedule.get_status.1}} days remaining for last day of vaccination
+                                <i class="fa fa-circle text-success"></i>
+                                {% elif schedule.get_status.0 == 'Red' %}
+                                {{schedule.get_status.1}} days have passed and still unvaccinated
+                                <i class="fa fa-circle text-danger"></i>
+                                {% else %}
+                                {% endif %}
+                            </i>&nbsp;&nbsp;&nbsp;
+                        </div>
+                        {% endif %}
+                    </div>
+                    <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Immunation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-expand-md bg-info">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}"><i class="fa fa-tint fa-2x"></i></a>
+        <a class="navbar-brand" href="{% url 'home' %}">IMMUNATION</a>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="nav navbar-nav text-center">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false"
+                       href="#">Children</a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item" href="{% url 'child:create-child' %}">Add new Child</a>
+                        <hr>
+                        <a class="dropdown-item" href="{% url 'child:list-child' %}">List of your Children</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false"
+                       href="#">Schedule</a>
+                    <div class="dropdown-menu text-center">
+                        <a class="dropdown-item" href="{% url 'vaccine:list-schedule' %}">All schedule</a>
+                        <hr>
+                        <a class="dropdown-item" href="{% url 'vaccine:vaccinated-list-schedule' %}">Vaccinated</a>
+                        <hr>
+                        <a class="dropdown-item" href="{% url 'vaccine:unvaccinated-list-schedule' %}">Unvaccinated</a>
+                    </div>
+                </li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+            </ul>
+            <span class="navbar-text ml-auto d-flex justify-content-center">
+                {% if user.is_authenticated %}
+                <a class="btn btn-light text-dark" role="button" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a class="btn btn-light text-dark" role="button" href="{% url 'login' %}">Log In</a>
+                &nbsp;
+                <a class="btn btn-light text-dark" role="button" href="{% url 'signup' %}">Signup</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+<!-- Footer -->
+<footer class="text-center text-lg-start">
+  <br>
+  <!-- Section: Links  -->
+  <section class="border-top">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-6 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>University Name
+          </h6>
+          <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis esse expedita molestias nesciunt nobis quae repellendus, reprehenderit sunt totam vel. Asperiores doloribus illum magnam molestiae nesciunt nulla perspiciatis quae voluptas.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+        <div class="col-md-6 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fa fa-home me-3"></i> New Delhi, India</p>
+          <p>
+            <i class="fa fa-envelope me-3"></i>
+            youremail@gmail.com
+          </p>
+          <p><i class="fa fa-phone me-3"></i> + 977 234 567 88</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="#">OfficeName</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+</body>
+</html>

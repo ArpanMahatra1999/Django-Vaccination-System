@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="background container-fluid p-5">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <div class="row p-3">
+            {% for schedule in schedules reversed %}
+            {% if schedule.child.parent == request.user and not schedule.vaccinated %}
+            <div class="col-md-6 border border-dark p-5">
+                <div class="row"><h3 class="text-dark">{{schedule.dose}} for {{schedule.child}}</h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <i class="fa fa-calendar blue-icon"></i>&nbsp;&nbsp;
+                    <i>
+                        {% if schedule.get_status.0 == 'Yellow' %}
+                        {{schedule.get_status.1}} days remaining for first day of vaccination
+                        <i class="fa fa-circle text-warning"></i>
+                        {% elif schedule.get_status.0 == 'Green' %}
+                        {{schedule.get_status.1}} days remaining for last day of vaccination
+                        <i class="fa fa-circle text-success"></i>
+                        {% elif schedule.get_status.0 == 'Red' %}
+                        {{schedule.get_status.1}} days have passed and still unvaccinated
+                        <i class="fa fa-circle text-danger"></i>
+                        {% else %}
+                        {% endif %}
+                    </i>&nbsp;&nbsp;&nbsp;
+                </div>
+                <hr>
+                <div class="row">
+                    <a class="btn btn-success text-light border border-success rounded-pill px-3 py-2" role="button"
+                       href="{% url 'vaccine:update-schedule' schedule.id %}">Mark Vaccinated</a></div>
+            </div>
+            <hr>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

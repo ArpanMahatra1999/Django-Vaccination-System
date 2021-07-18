@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="background container-fluid p-5">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <div class="row p-3">
+            {% for schedule in schedules reversed %}
+            {% if schedule.child.parent == request.user and schedule.vaccinated %}
+            <div class="col-md-6 border border-dark p-5">
+                <div class="row"><h3 class="text-dark">{{schedule.dose}} for {{schedule.child}}</h3>
+                </div>
+                <hr>
+                <div class="row"><b><i class="fa fa-calendar blue-icon"></i>&nbsp;Date of Vaccination:</b>&nbsp;{{schedule.date_of_vaccination}}
+                </div>
+            </div>
+            <hr>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

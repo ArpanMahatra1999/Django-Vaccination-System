@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="background container-fluid p-5">
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <div class="row p-3 justify-content-center">
+            <h1>Our Vaccines</h1>
+        </div>
+        <hr>
+        <div class="row p-3">
+        {% for vaccine in vaccines %}
+            <div class="col-md-6 border border-dark p-5">
+                <div class="row justify-content-center"><h3 class="text-dark">{{vaccine.name}}</h3></div>
+                <div class="row justify-content-center"><p>{{vaccine.description}}</p></div>
+                <div class="row justify-content-center"><p><b>Route: </b>{{vaccine.route}}</p></div>
+                <div class="row justify-content-center"><p><b>Side Effects: </b>{{vaccine.side_effects}}</p></div>
+                <div class="row justify-content-center"><p><b>Before Care: </b>{{vaccine.before_care}}</p></div>
+                <div class="row justify-content-center"><p><b>After Care: </b>{{vaccine.after_care}}</p></div>
+                <div class="row justify-content-center"><p><b>Protect Against: </b>{{vaccine.protect_against}}</p></div>
+            </div>
+        <hr>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="container shadow p-3 mb-5 bg-white rounded">
+        <div class="row p-3 justify-content-center">
+            <h1>Contraindication of all immunization</h1>
+        </div>
+        <hr>
+        <div class="row p-3">
+            <ul class="border border-dark p-5">
+                <li>Child has a high fever.</li>
+                <li>Child has had a bad reaction with previous immunization.</li>
+                <li>Child has had, or is having treatment for cancer.</li>
+                <li>Child is taking any medicine which affects the immune system, for eg: immunosuppressant( given after organ transplant or for malignant disease) or high dose steroids.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
